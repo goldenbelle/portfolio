@@ -23,8 +23,13 @@ const Item = styled.div`
   width: 80px;
   height: 50px;
   text-align: center;
-  background-color: ${(props) => (props.current ? "grey" : "transparent")};
+  font-weight: ${(props) => (props.current ? "700" : "")};
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  color: ${(props) => (props.current ? "#F7DC6F" : "white")};
   transition: background-color 0.5s ease-in-out;
+  &:hover {
+    color: #f7dc6f;
+  }
 `;
 
 const SLink = styled(Link)`
