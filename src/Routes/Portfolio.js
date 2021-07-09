@@ -1,98 +1,151 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useState, useEffect } from "react";
+import Axios from "../Components/Axios";
+import { Api } from "../Components/Api";
+import Loader from "../Components/Loader";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Background from "../Components/Background";
-
-const SlideUp = keyframes`
-from {
-  right: 100px;
-  opacity: 0;
-}
-
-to {
-  right: 0px;
-  opacity: 1;
-}
-`;
-
-const SlideDown = keyframes`
-from {
-  left: 100px;
-  opacity: 0;
-}
-
-to {
-  left: 0;
-  opacity: 1;
-}
-`;
+import Footer from "../Components/Footer";
+import {
+  Animator,
+  ScrollContainer,
+  ScrollPage,
+  batch,
+  Sticky,
+  MoveOut,
+  FadeOut,
+} from "react-scroll-motion";
 
 const Div = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+  background-color: #6aabd2;
+  color: white;
 `;
 
-const Left = styled.div`
-  height: 100%;
+const Title = styled.div`
+  font-size: 7vw;
+  font-weight: 600;
+  padding-bottom: 20px;
+  color: white;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  opacity: 0.7;
+`;
+
+const Container = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 `;
 
-const SLink = styled(Link)`
-  padding: 10px;
+const Item = styled.div`
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 20px;
 `;
 
-const H1 = styled.h1`
+const View = styled.div`
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  display: none;
+`;
+
+const Img = styled(Link)`
+  width: 70vw;
+  max-width: 800px;
+  height: 500px;
+  margin: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  background-image: url(${(props) => props.bgUrl});
+  background-size: cover;
+  background-position: center center;
+  font-size: 30px;
   position: relative;
-  animation: ${SlideUp} 2s ease-in-out;
-  font-size: 50px;
-  font-weight: 700;
-  color: transparent;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: white;
   &:hover {
-    color: white;
+    box-shadow: none;
+    ${View} {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 300;
+      font-size: 20px;
+      color: skyblue;
+      box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+    }
   }
 `;
 
-const H2 = styled.h1`
-  position: relative;
-  animation: ${SlideDown} 2s ease-in-out;
-  font-size: 50px;
-  font-weight: 700;
-  color: transparent;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: white;
-  &:hover {
-    color: white;
-  }
+const Detail = styled.div`
+  text-align: center;
 `;
 
-const Right = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Subtitle = styled.div`
+  font-weight: 500;
+  font-size: 20px;
+  padding: 5px;
+`;
+
+const Duty = styled.div`
+  font-weight: 200;
 `;
 
 export default () => {
-  return (
-    <Div>
-      <Background />
-      <Left>
-        <SLink to="portfolio/web">
-          <H1>Web</H1>
-        </SLink>
-      </Left>
-      <Right>
-        <SLink to="portfolio/graphic">
-          <H2>Graphic</H2>
-        </SLink>
-      </Right>
-    </Div>
+  const { data, loading, error } = Axios(Api.portfolio());
+  return loading ? (
+    <>
+      <Div>
+        <ScrollContainer>
+          <ScrollPage page={0}>
+            <Animator
+              animation={batch(Sticky(), MoveOut(1000, 0), FadeOut(1, 0))}>
+              <Title>Portfolio</Title>
+            </Animator>
+            <Animator
+              animation={batch(Sticky(), MoveOut(-1000, 0), FadeOut(1, 0))}>
+              <Title>Portfolio</Title>
+            </Animator>
+          </ScrollPage>
+        </ScrollContainer>
+
+        <Container>
+          {data.data.design.map((design, index) => (
+            <>
+              <Item key={index}>
+                <Img to={`portfolio/${design.id}`} bgUrl={design.thumbnail_url}>
+                  <View>view</View>
+                </Img>
+                <Detail>
+                  <Subtitle>{design.title}</Subtitle>
+                  <Duty>
+                    {design.client} | {design.type}
+                  </Duty>
+                </Detail>
+              </Item>
+            </>
+          ))}
+          {data.data.web.map((web, index) => (
+            <>
+              <Item key={index}>
+                <Img to={`portfolio/${web.id}`} bgUrl={web.thumbnail_url}>
+                  <View>view</View>
+                </Img>
+                <Detail>
+                  <Subtitle>{web.title}</Subtitle>
+                  <Duty>
+                    {web.client} | {web.type}
+                  </Duty>
+                </Detail>
+              </Item>
+            </>
+          ))}
+        </Container>
+      </Div>
+      <Footer />
+    </>
+  ) : (
+    <Loader />
   );
 };

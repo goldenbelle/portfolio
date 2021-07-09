@@ -1,11 +1,9 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import Background from "../../Components/Background";
 import Footer from "../../Components/Footer";
 import Fade from "react-reveal/Fade";
 import Video from "./Video";
 import Fixed from "./Fixed";
-import Works from "./Works";
 import {
   Animator,
   ScrollContainer,
@@ -16,7 +14,6 @@ import {
   Sticky,
   StickyIn,
   StickyOut,
-  Zoom,
   ZoomOut,
 } from "react-scroll-motion";
 
@@ -24,15 +21,8 @@ const Section = styled.div`
   width: 100%;
   height: 100vh;
   &:nth-child(4) {
-    background-color: #7be3d7;
     height: 100%;
   }
-`;
-
-const Back = styled.div`
-  width: 100vw;
-  height: 100%;
-  background-color: #7be3d7;
 `;
 
 const Color = styled.div`
@@ -40,6 +30,18 @@ const Color = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Title = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #6aabd2;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
 `;
 
 const Span = styled.div`
@@ -76,65 +78,9 @@ const Img = styled.div`
   position: absolute;
 `;
 
-const Title = styled.div`
-  display: grid;
-  grid-template-rows: 50vh 50vh;
-  ${Back} {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    background-color: transparent;
-    background-image: linear-gradient(
-      180deg,
-      transparent,
-      #7be3d7,
-      #7be3d7,
-      #7be3d7
-    );
-    font-size: 7vw;
-    color: white;
-    font-weight: 600;
-    padding-bottom: 5%;
-  }
-`;
-
-const Blend = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Bfont = styled.div`
-  font-size: 8vw;
-  line-height: 8vw;
-  margin: 0;
-  font-weight: 900;
-  color: white;
-  position: relative;
-  z-index: 100;
-  mix-blend-mode: darken;
-`;
-
-const FontBack = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: #7be3d7;
-`;
-const Bimg = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-image: url("https://cdn.pixabay.com/photo/2018/07/04/11/58/xiamen-3515964_1280.jpg");
-  background-size: cover;
-  background-position: center;
-`;
-
 export default () => {
   return (
     <>
-      <Background />
       <ScrollContainer>
         <Fixed />
 
@@ -142,20 +88,25 @@ export default () => {
           <Video />
         </Section>
 
-        <Section>
-          <Title>
-            <div></div>
-
-            <Back>
-              <Fade top>Recent Works</Fade>
-            </Back>
-          </Title>
-        </Section>
+        <Section></Section>
 
         <Section>
-          <ScrollPage page={2}>
-            <Animator animation={batch(StickyOut())}>
-              <Color style={{ backgroundColor: "" }}>
+          <ScrollPage page={1}>
+            <ScrollPage page={2}>
+              <Animator animation={batch(Sticky(), FadeIn())}>
+                <Color style={{ backgroundColor: "white" }}>
+                  <Span></Span>
+                </Color>
+              </Animator>
+            </ScrollPage>
+            <Animator animation={batch(StickyOut(), ZoomOut(), FadeOut(0, 1))}>
+              <Title style={{ fontSize: "40px" }}>Recent Works</Title>
+            </Animator>
+          </ScrollPage>
+
+          <ScrollPage page={3}>
+            <Animator animation={batch(Sticky(), FadeIn())}>
+              <Color style={{ backgroundColor: "#D9E4EC" }}>
                 <Span style={{ fontSize: "40px" }}>
                   VCEC Brand Identity <Btn>Learn More</Btn>
                 </Span>
@@ -164,9 +115,9 @@ export default () => {
             </Animator>
           </ScrollPage>
 
-          <ScrollPage page={3}>
+          <ScrollPage page={4}>
             <Animator animation={batch(Sticky(), FadeIn())}>
-              <Color style={{ backgroundColor: "blue" }}>
+              <Color style={{ backgroundColor: "#B7CFDC" }}>
                 <Span style={{ fontSize: "40px" }}>
                   Instagram Contents <Btn>Learn More</Btn>
                 </Span>
@@ -175,9 +126,9 @@ export default () => {
             </Animator>
           </ScrollPage>
 
-          <ScrollPage page={4}>
+          <ScrollPage page={5}>
             <Animator animation={batch(StickyIn(), FadeIn())}>
-              <Color style={{ backgroundColor: "pink" }}>
+              <Color style={{ backgroundColor: "#6AABD2" }}>
                 <Span style={{ fontSize: "40px" }}>
                   Movie Website<Btn>Learn More</Btn>
                 </Span>
@@ -185,28 +136,6 @@ export default () => {
               </Color>
             </Animator>
           </ScrollPage>
-
-          <ScrollPage page={5}>
-            <Blend>
-              <ScrollPage page={6}>
-                <Animator animation={batch(StickyIn())}>
-                  <Bimg></Bimg>
-                </Animator>
-              </ScrollPage>
-
-              <Animator animation={batch(StickyOut(), FadeOut(1, 0))}>
-                <FontBack></FontBack>
-              </Animator>
-              <Animator
-                animation={batch(StickyOut(), ZoomOut(), FadeOut(1, 0))}>
-                <Bfont style={{ fontSize: "40px" }}>BYUL KIM</Bfont>
-              </Animator>
-            </Blend>
-          </ScrollPage>
-        </Section>
-
-        <Section>
-          <Bimg></Bimg>
         </Section>
       </ScrollContainer>
 

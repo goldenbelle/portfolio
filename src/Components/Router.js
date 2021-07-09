@@ -10,19 +10,16 @@ import Contact from "../Routes/Contact";
 import Home from "../Routes/Home/index.js";
 import Portfolio from "../Routes/Portfolio";
 import Detail from "../Routes/Detail";
-import Projects from "../Routes/Projects";
-import Resume from "../Routes/Resume/index.js";
+import About from "../Routes/About/index.js";
 
 export default () => (
   <Router>
     <Nav />
     <Switch>
       <Route path="/" exact component={Home} />
-      <Route path="/resume" component={Resume} />
+      <Route path="/about" component={About} />
       <Route path="/portfolio" exact component={Portfolio} />
-      <Route path="/portfolio/web" exact component={Projects} />
-      <Route path="/portfolio/graphic" exact component={Projects} />
-      <Route path="/portfolio/:id" component={Detail} />
+      <Route path="/portfolio/:id" exact component={Detail} />
       <Route path="/contact" component={Contact} />
       <Redirect from="*" to="/" />
     </Switch>

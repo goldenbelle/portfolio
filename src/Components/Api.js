@@ -5,5 +5,6 @@ const api = axios.create({
 });
 
 export const Api = {
-  resume: () => api.get("resume.json"),
+  about: () => api.get("about.json"),
+  portfolio: () => api.get("portfolio.json"),
 };

@@ -1,32 +1,3 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
-import Zoom from "react-reveal/Zoom";
-import Fade from "react-reveal/Fade";
-
-const Contents = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
-const Title = styled.div`
-  font-size: 40px;
-  font-weight: 600;
-  padding-bottom: 20px;
-  color: white;
-  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-`;
-
-const Btn = styled.div`
-  border: 1px solid white;
-  padding: 10px;
-  color: white;
-`;
-
 const Arrow = styled.div`
   width: 100px;
   height: 100px;
@@ -103,26 +74,16 @@ const Text = styled.span`
   display: block;
   margin-top: 70px;
   font-size: 12px;
-  color: #fff;
+  color: black;
   text-transform: uppercase;
   white-space: nowrap;
   opacity: 0.25;
   animation: ${Pulse} 2s linear alternate infinite;
 `;
 
-export default () => {
-  return (
-    <>
-      <Contents>
-        <Title>Let me Introduce Myself!</Title>
-        <Btn>Download Resume</Btn>
-      </Contents>
-      <Arrow>
-        <Chevron></Chevron>
-        <Chevron></Chevron>
-        <Chevron></Chevron>
-        <Text>Scroll Down</Text>
-      </Arrow>
-    </>
-  );
-};
+<Arrow>
+  <Chevron></Chevron>
+  <Chevron></Chevron>
+  <Chevron></Chevron>
+  <Text>Scroll Down</Text>
+</Arrow>;

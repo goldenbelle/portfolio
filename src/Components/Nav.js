@@ -91,8 +91,8 @@ const SLink = styled(Link)`
 export default withRouter(({ location: { pathname } }) => {
   const menus = [
     { name: "Home", path: "/" },
-    { name: "Resume", path: "/resume" },
-    { name: "Portfolio", path: "/portfolio", dropdown: ["Web", "Graphic"] },
+    { name: "About", path: "/about" },
+    { name: "Portfolio", path: "/portfolio" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -128,15 +128,6 @@ export default withRouter(({ location: { pathname } }) => {
               <SLink to={menu.path} onClick={setTrue}>
                 {menu.name}
               </SLink>
-              {menu.dropdown
-                ? menu.dropdown.map((n) => (
-                    <Dropdown
-                      current={pathname === `/portfolio/${n}`}
-                      onClick={setTrue}>
-                      <Link to={`/portfolio/${n}`}>{n}</Link>
-                    </Dropdown>
-                  ))
-                : null}
             </Item>
           ))}
         </Menus>
